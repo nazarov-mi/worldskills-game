@@ -1,0 +1,20 @@
+
+html,
+body {
+	overflow: hidden;
+}
+
+body {
+	background-color: #342345;
+}
+
+.app {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.hidden {
+	display: none;
+}

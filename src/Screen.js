@@ -9,18 +9,9 @@ class Screen {
 			$el = document.createElement('div')
 		}
 
-		$el.className = 'screen'
+		$el.classList.add('screen')
 
 		this.$el = $el
-		this.width = 0
-		this.height = 0
-	}
-
-	resize(w, h) {
-		this.width = w
-		this.hide = h
-		this.$el.style.width = w + 'px'
-		this.$el.style.height = h + 'px'
 	}
 
 	show(parent) {

@@ -5,6 +5,7 @@
   "author": "Nazarov MI <m@nazarov-mi.ru>",
   "license": "ISC",
   "scripts": {
+    "build": "webpack",
     "start": "webpack --watch"
   },
   "devDependencies": {

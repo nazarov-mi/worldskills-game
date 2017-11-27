@@ -1,8 +1,10 @@
+const path = require('path')
 
 module.exports = {
-	entry: './src/Main.js',
+	entry: './src/main.js',
 	output: {
-		filename: './dist/app.js'
+		path: path.resolve(__dirname, 'dist'),
+		filename: 'bundle.js'
 	},
 	resolve: {
 		extensions: ['.js'],
@@ -12,7 +14,7 @@ module.exports = {
 	},
 	devtool: 'source-map',
 	module: {
-		loaders: [
+		rules: [
 			{
 				test: /\.js$/,
 				exclude: /node_modules/,
@@ -23,7 +25,7 @@ module.exports = {
 			},
 			{
 				test: /\.css$/,
-				loader: 'style-loader!css-loader'
+				use: ['style-loader', 'css-loader']
 			}
 		]
 	}

@@ -1,29 +1,26 @@
 
-import Actor from './Actor'
+import Actor from '@/Actor'
 
 class Sprite extends Actor {
-	constructor(rx, ry, rw, rh) {
+	constructor(src) {
 		super()
+		const image = new Image()
 
-		this.region = {
-			x: rx,
-			y: ry,
-			width: rw,
-			height: rh
+		image.onload = () => {
+			this.w = image.naturalWidth
+			this.h = image.naturalHeight
 		}
+		image.src = src
 
-		this.w = rw
-		this.h = rh
+		this.image = image
 	}
 
-	draw(ctx, atlas) {
-		const { region, matrix, w, h } = this
+	draw(ctx) {
+		const { image, matrix, w, h } = this
 
 		ctx.save()
-		ctx.setTransform(matrix.a,
-		 matrix.b, matrix.c, matrix.d, matrix.x, matrix.y)
-		ctx.strokeRect(0, 0, w, h)
-		ctx.drawImage(atlas, region.x, region.y, region.width, region.height, 0, 0, w, h)
+		ctx.setTransform(matrix.a, matrix.b, matrix.c, matrix.d, matrix.x, matrix.y)
+		ctx.drawImage(image, 0, 0, w, h)
 		ctx.restore()
 	}
 }

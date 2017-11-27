@@ -1,39 +1,24 @@
 
 class Canvas {
-	constructor(parent, w, h) {
+	constructor(parent, w, h, bgColor) {
 		const canvas = document.createElement('canvas')
 		const ctx = canvas.getContext('2d')
-		const atlas = new Image()
 
 		canvas.width = w
 		canvas.height = h
 		parent.appendChild(canvas)
 
-		ctx.imageSmoothingEnabled = false
-		ctx.webkitImageSmoothingEnabled = false
-		ctx.mozImageSmoothingEnabled = false
-		ctx.msImageSmoothingEnabled = false
-
-		atlas.onload = () => this.init()
-		atlas.src = 'https://0fps.files.wordpress.com/2013/07/terrain.png'
-
+		this.parent = parent
 		this.width = w
 		this.height = h
+		this.bgColor = bgColor || 'transparent'
 		this.canvas = canvas
 		this.ctx = ctx
-		this.atlas = atlas
 		this.actors = []
-		this.ready = false
-	}
-
-	init() {
-		this.ready = true
 	}
 
 	tick(delta) {
-		if (!this.ready) return
-
-		const { width, height, actors, ctx, atlas } = this
+		const { width, height, bgColor, ctx, actors } = this
 		let i;
 
 		i = actors.length
@@ -41,12 +26,18 @@ class Canvas {
 			actors[i].tick(delta)
 		}
 
-		ctx.fillStyle = '#f5f5f5'
+		ctx.imageSmoothingEnabled = false
+		ctx.webkitImageSmoothingEnabled = false
+		ctx.mozImageSmoothingEnabled = false
+		ctx.msImageSmoothingEnabled = false
+
+		ctx.clearRect(0, 0, width, height)
+		ctx.fillStyle = bgColor
 		ctx.fillRect(0, 0, width, height)
 
 		i = actors.length
 		while (--i >= 0) {
-			actors[i].draw(ctx, atlas)
+			actors[i].draw(ctx)
 		}
 	}
 
@@ -54,6 +45,7 @@ class Canvas {
 		const i = this.actors.indexOf(actor)
 
 		if (i < 0) {
+			actor.canvas = this
 			this.actors.push(actor)
 		}
 
@@ -64,6 +56,7 @@ class Canvas {
 		const i = this.actors.indexOf(actor)
 
 		if (i >= 0) {
+			this.actors[i].canvas = null
 			this.actors.splice(i, 1)
 		}
 

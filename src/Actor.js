@@ -1,5 +1,5 @@
 
-import Mat22 from './Mat22'
+import Mat22 from '@/Mat22'
 
 class Actor {
 	constructor() {
@@ -14,6 +14,7 @@ class Actor {
 		this.angle = 0
 		this.matrix = new Mat22()
 		this.transformed = false
+		this.canvas = null
 	}
 
 	tick(delta) {
@@ -29,8 +30,16 @@ class Actor {
 		}
 	}
 
-	draw(ctx, atlas) {
+	draw(ctx) {
 		// TO DO
+	}
+
+	remove() {
+		if (this.canvas) {
+			this.canvas.remove(this)
+		}
+
+		return this
 	}
 
 	translate(x, y) {
@@ -141,7 +150,7 @@ class Actor {
 	}
 
 	get width() {
-		return this.w
+		return this.w * this.scaleX
 	}
 
 	set width(v) {
@@ -152,7 +161,7 @@ class Actor {
 	}
 
 	get height() {
-		return this.h
+		return this.h * this.scaleY
 	}
 
 	set height(v) {

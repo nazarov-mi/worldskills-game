@@ -1,12 +1,12 @@
 
-import MenuScreen from './screens/MenuScreen'
-import GameScreen from './screens/GameScreen'
+import MenuScreen from '@/screens/MenuScreen'
+import GameScreen from '@/screens/GameScreen'
 
 class App {
 	constructor() {
 		const $el = document.createElement('div')
 
-		$el.className = 'app'
+		$el.classList.add('app')
 		document.body.appendChild($el)
 
 		this.$el = $el
@@ -17,20 +17,8 @@ class App {
 		this.menuScreen = new MenuScreen()
 		this.gameScreen = new GameScreen()
 
-		this.resize(640, 480)
 		this.resume()
 		this.setScreen(this.gameScreen)
-	}
-
-	resize(w, h) {
-		this.width = w
-		this.height = h
-		this.$el.style.width = w + 'px'
-		this.$el.style.height = h + 'px'
-
-		if (this.screen) {
-			this.screen.resize(w, h)
-		}
 	}
 
 	tick(delta) {
@@ -67,7 +55,6 @@ class App {
 
 		if (screen) {
 			screen.show(this.$el)
-			screen.resize(this.width, this.height)
 		}
 	}
 }
